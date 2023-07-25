@@ -1,5 +1,9 @@
 package hello.core.member;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
 public class MemberServiceImpl implements MemberSerivce {
 
     private final MemberRepository memberRepository;
@@ -9,6 +13,7 @@ public class MemberServiceImpl implements MemberSerivce {
         return memberRepository;
     }
 
+    @Autowired
     public MemberServiceImpl(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
