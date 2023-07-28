@@ -2,7 +2,10 @@ package hello.core.beanfind;
 
 import hello.core.discount.DiscountPolicy;
 import hello.core.discount.FixDiscountPolicy;
-import hello.core.member.*;
+import hello.core.member.MemberRepository;
+import hello.core.member.MemberService;
+import hello.core.member.MemberServiceImpl;
+import hello.core.member.MemoryMemberRepository;
 import hello.core.order.OrderService;
 import hello.core.order.OrderServiceImpl;
 import org.junit.jupiter.api.Assertions;
@@ -22,22 +25,22 @@ class ApplicationContextBasicFindTest {
     @Test
     @DisplayName("빈 이름으로 조회")
     void findBeanByName() {
-        MemberSerivce memberSerivce = ac.getBean("memberService", MemberSerivce.class);
-        assertThat(memberSerivce).isInstanceOf(MemberSerivce.class);
+        MemberService memberSerivce = ac.getBean("memberService", MemberService.class);
+        assertThat(memberSerivce).isInstanceOf(MemberService.class);
     }
 
     @Test
     @DisplayName("빈 이름으로 조회 실패")
     void findBeanByName_X() {
         Assertions.assertThrows(NoSuchBeanDefinitionException.class,
-                () -> ac.getBean("xxxx", MemberSerivce.class));
+                () -> ac.getBean("xxxx", MemberService.class));
     }
 
     @Test
     @DisplayName("이름 없이 타입으로 조회")
     void findBeanByType() {
-        MemberSerivce memberSerivce = ac.getBean(MemberSerivce.class);
-        assertThat(memberSerivce).isInstanceOf(MemberServiceImpl.class);
+        MemberService memberService = ac.getBean(MemberService.class);
+        assertThat(memberService).isInstanceOf(MemberServiceImpl.class);
     }
 
     @Test
@@ -51,7 +54,7 @@ class ApplicationContextBasicFindTest {
     static public class BasicAppConfig {
 
         @Bean
-        public MemberSerivce memberService() {
+        public MemberService memberService() {
             return new MemberServiceImpl(memberRepository());
         }
 
